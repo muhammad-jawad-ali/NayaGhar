@@ -44,11 +44,9 @@ NayaGhar is a revolutionary real estate platform that flips the traditional mode
    ```
 
 3. **Environment Variables:**
-   Create a `.env.local` file in the root and add the following:
-   ```env
-   MONGODB_URI=your_mongodb_connection_string
-   NEXTAUTH_SECRET=your_nextauth_secret
-   NEXTAUTH_URL=http://localhost:3000
+   Copy `.env.example` to `.env.local` and fill in your values:
+   ```bash
+   cp .env.example .env.local
    ```
 
 4. **Run the development server:**
