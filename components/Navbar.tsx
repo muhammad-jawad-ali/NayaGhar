@@ -99,12 +99,12 @@ export default function Navbar() {
             <NotificationBell userId={user.id} />
             <div className="flex items-center gap-3 bg-gray-50 p-1 pr-3 rounded-full border border-gray-200">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs">
-                {user.name?.charAt(0).toUpperCase()}
+                {user?.name?.charAt(0).toUpperCase()}
               </div>
               {!mobile && (
                 <div className="flex flex-col leading-none">
-                  <span className="text-gray-900 font-bold text-[11px]">{user.name}</span>
-                  <span className="text-gray-500 font-bold text-[9px] uppercase tracking-wider">{user.role}</span>
+                  <span className="text-gray-900 font-bold text-[11px]">{user?.name}</span>
+                  <span className="text-gray-500 font-bold text-[9px] uppercase tracking-wider">{user?.role}</span>
                 </div>
               )}
               <button 

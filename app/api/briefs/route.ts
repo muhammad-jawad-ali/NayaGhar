@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     const newBrief = {
       ...validatedData,
       buyerId: (session.user as any).id,
-      buyerName: session.user.name || "Anonymous",
+      buyerName: session?.user?.name || "Anonymous",
       status: "open",
       bidsCount: 0,
       createdAt: new Date(),

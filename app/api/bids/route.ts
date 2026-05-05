@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
       const newBid = {
         ...validatedData,
         agentId: (session.user as any).id,
-        agentName: session.user.name || "Anonymous Agent",
+        agentName: session?.user?.name || "Anonymous Agent",
         status: "pending",
         createdAt: new Date(),
         updatedAt: new Date(),
