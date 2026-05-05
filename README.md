@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NayaGhar - Demand-First Real Estate Marketplace
 
-## Getting Started
+NayaGhar is a revolutionary real estate platform that flips the traditional model. Instead of agents posting properties and buyers searching, **buyers post their requirements (Briefs)** and **agents bid** with matching properties from their portfolio.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Demand-First Marketplace**: Buyers post exactly what they want (location, budget, category).
+- **Agent Bidding System**: Verified agents can see buyer requirements and submit matching property bids.
+- **Real-Time Notifications**: Instant updates when a bid is placed or a brief is updated.
+- **Role-Based Access Control (RBAC)**: Secure areas for Buyers, Agents, and Administrators.
+- **Admin Command Center**: Complete oversight of users, marketplace activity, and system health.
+- **Security First**: 
+  - JWT-based session handling with NextAuth.
+  - Password hashing via Bcrypt (salt rounds 12).
+  - Secure token-based password reset flow.
+  - CSRF and XSS protection via Next.js defaults and Zod validation.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS.
+- **Backend**: Next.js API Routes, MongoDB (Native Driver).
+- **Authentication**: NextAuth.js.
+- **Validation**: Zod.
+- **Styling**: Glassmorphism UI, CSS-in-JS (styled-jsx).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏁 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18+ 
+- MongoDB Instance (Atlas or Local)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/nayaghar.git
+   cd nayaghar
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Environment Variables:**
+   Create a `.env.local` file in the root and add the following:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   NEXTAUTH_SECRET=your_nextauth_secret
+   NEXTAUTH_URL=http://localhost:3000
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the app:**
+   Navigate to [http://localhost:3000](http://localhost:3000).
+
+## 🛡️ Admin Setup
+
+To create an admin user, sign up via the interface and then manually update the `role` field to `admin` in your MongoDB `users` collection, or use the "Cycle Role" feature in the Admin User Management panel if you already have an admin account.
+
+## 📄 License
+
+This project is licensed under the MIT License.
