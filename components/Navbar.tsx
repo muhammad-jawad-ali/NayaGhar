@@ -36,7 +36,7 @@ export default function Navbar() {
     <div className={`flex ${mobile ? "flex-col gap-4" : "items-center gap-2"}`}>
       <Link 
         href="/marketplace" 
-        className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-white/5 ${mobile ? "text-lg py-4 border-b border-white/5" : "text-sm text-slate-400 hover:text-white"}`}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-gray-100 ${mobile ? "text-lg py-4 border-b border-gray-100" : "text-sm text-gray-600 hover:text-primary"}`}
         onClick={() => setMobileMenuOpen(false)}
       >
         <Search size={mobile ? 20 : 18} />
@@ -48,7 +48,7 @@ export default function Navbar() {
           {user?.role === "admin" && (
             <Link 
               href="/dashboard/admin" 
-              className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-white/5 ${mobile ? "text-lg py-4 border-b border-white/5" : "text-sm text-slate-400 hover:text-white"}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-gray-100 ${mobile ? "text-lg py-4 border-b border-gray-100" : "text-sm text-gray-600 hover:text-primary"}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               <Settings size={mobile ? 20 : 18} />
@@ -59,7 +59,7 @@ export default function Navbar() {
             <>
               <Link 
                 href="/dashboard/buyer" 
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-white/5 ${mobile ? "text-lg py-4 border-b border-white/5" : "text-sm text-slate-400 hover:text-white"}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-gray-100 ${mobile ? "text-lg py-4 border-b border-gray-100" : "text-sm text-gray-600 hover:text-primary"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <LayoutDashboard size={mobile ? 20 : 18} />
@@ -67,7 +67,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="/briefs/new" 
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500 hover:text-white ${mobile ? "text-lg py-4" : "text-sm"}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white ${mobile ? "text-lg py-4" : "text-sm"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <PlusCircle size={mobile ? 20 : 18} />
@@ -79,7 +79,7 @@ export default function Navbar() {
             <>
               <Link 
                 href="/dashboard/agent" 
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-white/5 ${mobile ? "text-lg py-4 border-b border-white/5" : "text-sm text-slate-400 hover:text-white"}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all hover:bg-gray-100 ${mobile ? "text-lg py-4 border-b border-gray-100" : "text-sm text-gray-600 hover:text-primary"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <LayoutDashboard size={mobile ? 20 : 18} />
@@ -87,7 +87,7 @@ export default function Navbar() {
               </Link>
               <Link 
                 href="/marketplace" 
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500 hover:text-white ${mobile ? "text-lg py-4" : "text-sm"}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white ${mobile ? "text-lg py-4" : "text-sm"}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Home size={mobile ? 20 : 18} />
@@ -95,21 +95,21 @@ export default function Navbar() {
               </Link>
             </>
           )}
-          <div className={`flex items-center gap-4 ${mobile ? "mt-4 pt-4 border-t border-white/10" : "ml-4"}`}>
+          <div className={`flex items-center gap-4 ${mobile ? "mt-4 pt-4 border-t border-gray-100" : "ml-4"}`}>
             <NotificationBell userId={user.id} />
-            <div className="flex items-center gap-3 bg-white/5 p-1 pr-3 rounded-full border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
+            <div className="flex items-center gap-3 bg-gray-50 p-1 pr-3 rounded-full border border-gray-200">
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs">
                 {user.name?.charAt(0).toUpperCase()}
               </div>
               {!mobile && (
                 <div className="flex flex-col leading-none">
-                  <span className="text-white font-bold text-[11px]">{user.name}</span>
-                  <span className="text-slate-500 font-bold text-[9px] uppercase tracking-wider">{user.role}</span>
+                  <span className="text-gray-900 font-bold text-[11px]">{user.name}</span>
+                  <span className="text-gray-500 font-bold text-[9px] uppercase tracking-wider">{user.role}</span>
                 </div>
               )}
               <button 
                 onClick={() => signOut()} 
-                className="p-1.5 rounded-full text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                className="p-1.5 rounded-full text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors"
                 title="Sign Out"
               >
                 <LogOut size={16} />
@@ -121,7 +121,7 @@ export default function Navbar() {
         <div className={`flex items-center ${mobile ? "flex-col gap-4 mt-4" : "gap-6 ml-4"}`}>
           <Link 
             href="/auth/login" 
-            className="text-sm font-bold text-slate-400 hover:text-white transition-colors"
+            className="text-sm font-bold text-gray-600 hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
             Sign In
@@ -142,13 +142,13 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-500 ${
       scrolled 
-        ? "h-16 bg-background/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50" 
+        ? "h-16 bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-sm" 
         : "h-20 bg-transparent"
     }`}>
       <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl font-black tracking-tighter text-white">
-            Naya<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 group-hover:from-indigo-300 group-hover:to-purple-300 transition-all">Ghar</span>
+          <span className="text-2xl font-black tracking-tighter text-gray-900">
+            Naya<span className="text-primary group-hover:text-primary-hover transition-all">Ghar</span>
           </span>
         </Link>
 
@@ -159,7 +159,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation Toggle */}
         <button 
-          className="lg:hidden p-2 text-white hover:bg-white/5 rounded-xl transition-colors" 
+          className="lg:hidden p-2 text-gray-900 hover:bg-gray-100 rounded-xl transition-colors" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -168,14 +168,14 @@ export default function Navbar() {
 
       {/* Mobile Sidebar Overlay */}
       <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-[998] transition-opacity duration-300 lg:hidden ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMobileMenuOpen(false)}
       />
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 right-0 w-80 h-full bg-background border-l border-white/5 z-[999] transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) lg:hidden ${
+      <div className={`fixed top-0 right-0 w-80 h-full bg-white border-l border-gray-200 z-[999] transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) lg:hidden ${
         mobileMenuOpen ? "translate-x-0" : "translate-x-full"
       }`}>
         <div className="p-6 pt-24">

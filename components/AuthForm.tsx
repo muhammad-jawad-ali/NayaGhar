@@ -65,225 +65,102 @@ export default function AuthForm({ type }: AuthFormProps) {
   }
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>{type === "login" ? "Welcome Back" : "Join NayaGhar"}</h1>
-          <p>
+    <div className="flex justify-center items-center min-h-[80vh] p-4 sm:p-8">
+      <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 w-full max-w-[480px] shadow-2xl shadow-gray-200/50 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+            {type === "login" ? "Welcome Back" : "Join NayaGhar"}
+          </h1>
+          <p className="text-gray-600 font-medium">
             {type === "login"
               ? "Access your demand-first real estate dashboard"
               : "Start posting briefs or bidding on properties"}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          {error && (
+            <div className="bg-red-50 border border-red-100 text-red-600 p-4 rounded-xl text-sm font-bold text-center">
+              {error}
+            </div>
+          )}
 
           {type === "signup" && (
-            <div className="form-group">
-              <label htmlFor="name">Full Name</label>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name" className="text-sm font-bold text-gray-700 ml-1">Full Name</label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 placeholder="John Doe"
                 required
+                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
             </div>
           )}
 
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="email" className="text-sm font-bold text-gray-700 ml-1">Email Address</label>
             <input
               type="email"
               id="email"
               name="email"
               placeholder="john@example.com"
               required
+              className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="password" className="text-sm font-bold text-gray-700 ml-1">Password</label>
             <input
               type="password"
               id="password"
               name="password"
               placeholder="••••••••"
               required
+              className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
           </div>
 
           {type === "signup" && (
-            <div className="form-group">
-              <label htmlFor="role">I am a...</label>
-              <select id="role" name="role" required>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="role" className="text-sm font-bold text-gray-700 ml-1">I am a...</label>
+              <select 
+                id="role" 
+                name="role" 
+                required
+                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all appearance-none cursor-pointer"
+              >
                 <option value="buyer">Buyer (I want to buy)</option>
                 <option value="agent">Agent/Seller (I have properties)</option>
               </select>
             </div>
           )}
 
-          <button type="submit" disabled={loading} className="auth-button">
+          <button 
+            type="submit" 
+            disabled={loading} 
+            className="btn-primary w-full py-4 rounded-xl text-lg font-bold shadow-lg shadow-primary/20 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {loading ? "Processing..." : type === "login" ? "Sign In" : "Create Account"}
           </button>
         </form>
 
-        <div className="auth-footer">
+        <div className="mt-10 text-center text-gray-600 font-medium">
           {type === "login" ? (
             <p>
               Don't have an account?{" "}
-              <Link href="/auth/signup">Sign up for free</Link>
+              <Link href="/auth/signup" className="text-primary hover:underline font-bold">Sign up for free</Link>
             </p>
           ) : (
             <p>
               Already have an account?{" "}
-              <Link href="/auth/login">Sign in here</Link>
+              <Link href="/auth/login" className="text-primary hover:underline font-bold">Sign in here</Link>
             </p>
           )}
         </div>
       </div>
-
-      <style jsx>{`
-        .auth-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 80vh;
-          padding: 2rem;
-        }
-
-        .auth-card {
-          background: rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 24px;
-          padding: 3rem;
-          width: 100%;
-          max-width: 450px;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-          animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .auth-header {
-          text-align: center;
-          margin-bottom: 2.5rem;
-        }
-
-        .auth-header h1 {
-          font-size: 2.5rem;
-          font-weight: 800;
-          background: linear-gradient(135deg, #fff 0%, #888 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin-bottom: 0.5rem;
-        }
-
-        .auth-header p {
-          color: #94a3b8;
-          font-size: 1rem;
-        }
-
-        .auth-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-
-        .error-message {
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid rgba(239, 68, 68, 0.2);
-          color: #ef4444;
-          padding: 1rem;
-          border-radius: 12px;
-          font-size: 0.9rem;
-          text-align: center;
-        }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .form-group label {
-          color: #e2e8f0;
-          font-size: 0.9rem;
-          font-weight: 500;
-          margin-left: 0.25rem;
-        }
-
-        .form-group input, .form-group select {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          padding: 0.75rem 1rem;
-          color: white;
-          font-size: 1rem;
-          transition: all 0.2s;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-          outline: none;
-          border-color: #3b82f6;
-          background: rgba(255, 255, 255, 0.05);
-          box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-
-        .auth-button {
-          background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-          color: white;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
-          padding: 1rem;
-          font-size: 1.1rem;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          margin-top: 1rem;
-          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-          position: relative;
-          overflow: hidden;
-        }
-
-        .auth-button:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 24px -6px rgba(79, 70, 229, 0.5);
-          background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
-        }
-
-        .auth-button:active:not(:disabled) {
-          transform: translateY(0) scale(0.98);
-        }
-
-        .auth-button:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          filter: grayscale(0.5);
-        }
-
-        .auth-footer {
-          margin-top: 2rem;
-          text-align: center;
-          color: #94a3b8;
-          font-size: 0.9rem;
-        }
-
-        .auth-footer a {
-          color: #3b82f6;
-          text-decoration: none;
-          font-weight: 600;
-        }
-
-        .auth-footer a:hover {
-          text-decoration: underline;
-        }
-      `}</style>
     </div>
   );
 }

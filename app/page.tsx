@@ -1,120 +1,124 @@
 "use client";
 
 import Link from "next/link";
+import { ChevronRight, CheckCircle, Shield, Zap, TrendingUp } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-48">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/20 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 text-indigo-400 text-sm font-bold mb-8 backdrop-blur-md">
-            <span className="flex h-2 w-2 rounded-full bg-indigo-500 animate-ping" />
-            REINVENTING REAL ESTATE
-          </div>
-          
-          <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-[0.9]">
-            THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">UPWORK</span> FOR <br />
-            REAL ESTATE
-          </h1>
-          
-          <p className="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl leading-relaxed mb-12">
-            Stop scrolling through thousands of stale digital classifieds. 
-            Post your brief and let verified agents pitch properties available right now.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link 
-              href="/auth/signup" 
-              className="btn-primary btn-xl w-full sm:w-auto"
-            >
-              GET STARTED
-            </Link>
-            <Link 
-              href="/marketplace" 
-              className="btn-secondary btn-xl w-full sm:w-auto"
-            >
-              EXPLORE MARKETPLACE
-            </Link>
-          </div>
-
-          <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
-            <div className="text-center">
-              <p className="text-white text-3xl font-black mb-1">100%</p>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Verified Agents</p>
+      <section className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-gradient-to-b from-green-50/50 to-white overflow-hidden">
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px]" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-8 uppercase tracking-wider">
+              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+              Pakistan's Next-Gen Property CRM
             </div>
-            <div className="text-center">
-              <p className="text-white text-3xl font-black mb-1">Live</p>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Availability</p>
-            </div>
-            <div className="text-center">
-              <p className="text-white text-3xl font-black mb-1">Direct</p>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Pitching</p>
-            </div>
-            <div className="text-center">
-              <p className="text-white text-3xl font-black mb-1">Secure</p>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Transactions</p>
+            
+            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight mb-8 leading-[1.1]">
+              Find Your <span className="text-primary">Perfect Home</span> <br className="hidden md:block" />
+              Without the Search Stress
+            </h1>
+            
+            <p className="max-w-2xl mx-auto text-gray-600 text-lg md:text-xl leading-relaxed mb-12 font-medium">
+              Stop wasting hours on outdated listings. Post your requirements once 
+              and let verified agents pitch available properties directly to you.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                href="/auth/signup" 
+                className="btn-primary btn-xl w-full sm:w-auto shadow-lg shadow-primary/20"
+              >
+                Get Started Free
+                <ChevronRight size={20} />
+              </Link>
+              <Link 
+                href="/marketplace" 
+                className="btn-secondary btn-xl w-full sm:w-auto"
+              >
+                Browse Marketplace
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* How it Works */}
-      <section className="py-32 bg-white/[0.01] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">HOW IT WORKS</h2>
-            <div className="h-1 w-20 bg-indigo-500 mx-auto rounded-full" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 py-10 border-y border-gray-100">
             {[
-              { 
-                step: "01", 
-                title: "The Brief", 
-                desc: "Verified buyers post their exact requirements (Location, Budget, Amenities, Timeline)." 
-              },
-              { 
-                step: "02", 
-                title: "The Bid", 
-                desc: "Verified agents search for matching briefs and pitch their currently available properties." 
-              },
-              { 
-                step: "03", 
-                title: "The Match", 
-                desc: "Buyers receive a curated shortlist of 100% available options. No chasing ghost listings." 
-              }
-            ].map((item, i) => (
-              <div key={i} className="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/50 transition-all">
-                <div className="text-5xl font-black text-indigo-500/20 mb-6 group-hover:text-indigo-500/40 transition-colors">
-                  {item.step}
+              { label: "Verified Agents", value: "100%", icon: Shield },
+              { label: "Active Briefs", value: "500+", icon: Zap },
+              { label: "Success Rate", value: "95%", icon: TrendingUp },
+              { label: "Live Matches", value: "Real-time", icon: CheckCircle },
+            ].map((stat, i) => (
+              <div key={i} className="text-center group">
+                <div className="flex justify-center mb-3">
+                  <stat.icon className="w-6 h-6 text-primary/40 group-hover:text-primary transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{item.desc}</p>
+                <p className="text-gray-900 text-3xl font-bold mb-1">{stat.value}</p>
+                <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonial / Final CTA */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <div className="p-12 md:p-20 rounded-[3rem] bg-gradient-to-br from-indigo-600 to-blue-700 shadow-2xl shadow-indigo-600/20 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] translate-x-1/2 -translate-y-1/2" />
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
-              READY TO FIND YOUR <br /> DREAM HOME?
+      {/* How it Works */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">How NayaGhar Works</h2>
+            <p className="text-gray-600 font-medium">Three simple steps to your new doorstep</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { 
+                step: "01", 
+                title: "Post a Brief", 
+                desc: "Buyers post their exact requirements—budget, location, and amenities—to our verified marketplace." 
+              },
+              { 
+                step: "02", 
+                title: "Get Real Pitches", 
+                desc: "Verified agents find your brief and pitch properties that are actually available right now." 
+              },
+              { 
+                step: "03", 
+                title: "Seal the Deal", 
+                desc: "Review matches, chat with agents, and find your dream home without ever browsing a single listing." 
+              }
+            ].map((item, i) => (
+              <div key={i} className="relative p-8 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                <div className="text-4xl font-black text-primary/10 mb-6">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed font-medium">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="p-12 md:p-16 rounded-3xl bg-primary shadow-2xl shadow-primary/20 relative overflow-hidden text-center text-white">
+            <div className="absolute top-0 left-0 w-full h-full opacity-10">
+              <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight relative">
+              Ready to find your <br className="hidden md:block" />
+              future home today?
             </h2>
             <Link 
               href="/auth/signup" 
-              className="inline-block px-12 py-5 bg-white text-indigo-600 text-xl font-black rounded-2xl hover:bg-slate-100 transition-all hover:scale-105 shadow-2xl shadow-white/10"
+              className="inline-flex items-center gap-2 px-10 py-4 bg-white text-primary text-lg font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl relative"
             >
-              SIGN UP NOW
+              Sign Up For Free
+              <ChevronRight size={20} />
             </Link>
           </div>
         </div>

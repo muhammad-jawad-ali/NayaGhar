@@ -54,21 +54,21 @@ export default function MarketplacePage() {
   }, [filters]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
         <div>
-          <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-3">
             Requirement Marketplace
           </h1>
-          <p className="text-slate-400 text-lg">
-            Directly fulfill buyer requirements with your property portfolio.
+          <p className="text-gray-600 text-lg font-medium">
+            Browse active property requirements and pitch your portfolio.
           </p>
         </div>
         
         {(session?.user as any)?.role === "buyer" && (
           <Link
             href="/briefs/new"
-            className="btn-primary"
+            className="btn-primary shadow-lg shadow-primary/20"
           >
             Post a Requirement
           </Link>
@@ -76,27 +76,27 @@ export default function MarketplacePage() {
       </div>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 mb-10 p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-md shadow-xl">
-        <div className="lg:col-span-5 space-y-1">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Search Requirements</label>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 mb-12 p-8 rounded-3xl bg-white border border-gray-100 shadow-xl shadow-gray-200/40">
+        <div className="lg:col-span-5 flex flex-col gap-2">
+          <label className="text-xs font-bold text-gray-700 uppercase tracking-wider ml-1">Search Requirements</label>
           <div className="relative">
             <input
               type="text"
               placeholder="e.g. 5 Marla House in DHA..."
-              className="w-full bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-3.5 text-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder:text-slate-600"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 text-gray-900 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-gray-400"
             />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-4 space-y-1">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Location (City)</label>
+        <div className="lg:col-span-4 flex flex-col gap-2">
+          <label className="text-xs font-bold text-gray-700 uppercase tracking-wider ml-1">Location (City)</label>
           <select
             value={filters.city}
             onChange={(e) => setFilters({ ...filters, city: e.target.value })}
-            className="w-full bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-3.5 text-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 text-gray-900 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all appearance-none cursor-pointer"
           >
             <option value="">All Cities</option>
             {PAKISTANI_CITIES.map(city => (
@@ -105,12 +105,12 @@ export default function MarketplacePage() {
           </select>
         </div>
 
-        <div className="lg:col-span-3 space-y-1">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Category</label>
+        <div className="lg:col-span-3 flex flex-col gap-2">
+          <label className="text-xs font-bold text-gray-700 uppercase tracking-wider ml-1">Category</label>
           <select
             value={filters.category}
             onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-            className="w-full bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-3.5 text-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all appearance-none cursor-pointer"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 text-gray-900 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all appearance-none cursor-pointer"
           >
             <option value="">All Categories</option>
             <option value="house">House</option>
@@ -121,17 +121,18 @@ export default function MarketplacePage() {
           </select>
         </div>
       </div>
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold text-white">Available Briefs</h2>
-          <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-400">
-            {briefs.length} Total
+
+      <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl font-bold text-gray-900">Active Briefs</h2>
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-xs font-bold text-gray-600">
+            {briefs.length} total
           </span>
         </div>
         {loading && (
-          <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold animate-pulse">
-            <div className="h-1.5 w-1.5 rounded-full bg-current" />
-            REFRESHING...
+          <div className="flex items-center gap-2 text-primary text-sm font-bold">
+            <div className="h-2 w-2 rounded-full bg-current animate-pulse" />
+            Refreshing...
           </div>
         )}
       </div>
@@ -140,17 +141,7 @@ export default function MarketplacePage() {
       {loading && briefs.length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="group relative rounded-3xl bg-white/[0.02] border border-white/5 overflow-hidden h-[400px]">
-              <div className="h-48 bg-white/[0.03] animate-pulse" />
-              <div className="p-6 space-y-4">
-                <div className="h-4 w-1/3 bg-white/[0.03] rounded-full animate-pulse" />
-                <div className="h-6 w-3/4 bg-white/[0.03] rounded-full animate-pulse" />
-                <div className="h-4 w-full bg-white/[0.03] rounded-full animate-pulse" />
-                <div className="flex gap-2 pt-4">
-                  <div className="h-10 w-full bg-white/[0.03] rounded-xl animate-pulse" />
-                </div>
-              </div>
-            </div>
+            <div key={i} className="rounded-3xl bg-gray-50 border border-gray-100 h-[400px] animate-pulse" />
           ))}
         </div>
       ) : briefs.length > 0 ? (
@@ -160,26 +151,26 @@ export default function MarketplacePage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 rounded-3xl bg-white/[0.01] border border-dashed border-white/10">
-          <div className="text-slate-500 text-lg">No active requirements found.</div>
+        <div className="text-center py-24 rounded-3xl bg-gray-50 border-2 border-dashed border-gray-200">
+          <div className="text-gray-500 text-xl font-medium mb-4">No matching requirements found.</div>
           <button 
             onClick={() => setFilters({ city: "", category: "" })}
-            className="mt-4 text-indigo-400 font-semibold hover:text-indigo-300 underline underline-offset-4"
+            className="text-primary font-bold hover:underline"
           >
             Clear all filters
           </button>
         </div>
       )}
 
-      {/* Pagination / Load More */}
+      {/* Pagination */}
       {pagination.page < pagination.pages && (
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center">
           <button
             onClick={() => fetchBriefs(currentPage + 1, true)}
             disabled={loading}
-            className="btn-secondary px-10 py-4 disabled:opacity-50"
+            className="btn-secondary px-12 py-4 text-lg font-bold disabled:opacity-50"
           >
-            {loading ? "LOADING..." : "LOAD MORE REQUIREMENTS"}
+            {loading ? "Loading..." : "Load More Requirements"}
           </button>
         </div>
       )}

@@ -1,18 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --accent: #a855f7;
-  --card: #0f172a;
+  --background: #ffffff;
+  --foreground: #111827;
+  --primary: #008435;
+  --primary-hover: #006d2c;
+  --secondary: #f3f4f6;
+  --accent: #2563eb;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --muted: #6b7280;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -25,105 +32,46 @@ body {
 }
 
 @layer components {
-
-  /* Premium Design Tokens */
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.5rem;
-  }
-
-  .gradient-text {
-    background: #2c1683;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Button System - Simplified to avoid compiler issues */
-  .btn-base,
-  .btn-primary,
-  .btn-secondary,
-  .btn-glass {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 700;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-    border: 1px solid transparent;
-    user-select: none;
-  }
-
-  .btn-base:active,
-  .btn-primary:active,
-  .btn-secondary:active,
-  .btn-glass:active {
-    transform: scale(0.98);
+    @apply bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl shadow-sm;
   }
 
   .btn-primary {
-    background: #4e27c8;
-    color: white;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 24px -6px rgba(79, 70, 229, 0.4);
-    filter: brightness(1.1);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-bold transition-all cursor-pointer border border-transparent select-none bg-primary text-white shadow-sm hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-md active:scale-95;
   }
 
   .btn-secondary {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    backdrop-filter: blur(12px);
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-bold transition-all cursor-pointer border border-gray-200 select-none bg-gray-50 text-gray-900 hover:bg-gray-100 active:scale-95;
   }
 
   .btn-glass {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    backdrop-filter: blur(24px);
-  }
-
-  .btn-glass:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-bold transition-all cursor-pointer border border-white/20 select-none bg-white/10 backdrop-blur-md text-gray-900 hover:bg-white/20 active:scale-95;
   }
 
   .btn-xl {
-    padding: 1.25rem 2.5rem;
-    font-size: 1.125rem;
-    border-radius: 1.25rem;
+    @apply px-8 py-3.5 text-lg rounded-xl;
+  }
+
+  .section-title {
+    @apply text-4xl font-extrabold tracking-tight text-gray-900;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 10px;
+  background: #cbd5e1;
+  border-radius: 5px;
+  border: 2px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #94a3b8;
 }

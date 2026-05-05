@@ -8,24 +8,21 @@ interface BriefCardProps {
 
 export default function BriefCard({ brief, onDelete }: BriefCardProps) {
   const statusColors: Record<BriefStatus, string> = {
-    open: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    closed: "bg-rose-500/10 text-rose-400 border-rose-500/20",
-    fulfilled: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    open: "bg-green-50 text-green-700 border-green-100",
+    closed: "bg-gray-50 text-gray-600 border-gray-100",
+    fulfilled: "bg-blue-50 text-blue-700 border-blue-100",
   };
 
   return (
-    <div className="group relative p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-indigo-500/50 transition-all duration-300 backdrop-blur-sm overflow-hidden">
-      {/* Background Gradient Effect */}
-      <div className="absolute -right-20 -top-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all duration-500" />
-      
-      <div className="relative z-10">
-        <div className="flex justify-between items-start mb-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[brief.status]}`}>
+    <div className="group relative p-6 rounded-2xl bg-white border border-gray-100 hover:border-primary/50 hover:shadow-xl hover:shadow-gray-200/40 transition-all duration-300 overflow-hidden">
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="flex justify-between items-start mb-5">
+          <span className={`px-3 py-1 rounded-full text-[10px] font-bold border tracking-wider ${statusColors[brief.status]}`}>
             {brief.status.toUpperCase()}
           </span>
-          <div className="flex gap-2">
-            <span className="text-slate-500 text-xs">
-              {new Date(brief.createdAt).toLocaleDateString()}
+          <div className="flex items-center gap-3">
+            <span className="text-gray-400 text-[11px] font-bold">
+              {new Date(brief.createdAt).toLocaleDateString("en-PK", { day: 'numeric', month: 'short', year: 'numeric' })}
             </span>
             {onDelete && (
               <button 
@@ -35,47 +32,53 @@ export default function BriefCard({ brief, onDelete }: BriefCardProps) {
                     onDelete(brief._id!.toString());
                   }
                 }}
-                className="text-rose-500 hover:text-rose-400 transition-colors"
+                className="text-gray-300 hover:text-red-500 transition-colors p-1"
                 title="Delete Requirement"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
               </button>
             )}
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors">
+        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors leading-tight">
           {brief.category.charAt(0).toUpperCase() + brief.category.slice(1)} in {brief.area}, {brief.city}
         </h3>
 
         <div className="flex flex-wrap gap-2 mb-4">
-          <div className="px-2 py-1 rounded bg-slate-800 text-[10px] text-slate-300">
-            {brief.purpose.toUpperCase()}
+          <div className="px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[10px] font-bold text-gray-600 uppercase tracking-tight">
+            {brief.purpose}
           </div>
-          <div className="px-2 py-1 rounded bg-slate-800 text-[10px] text-slate-300">
+          <div className="px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[10px] font-bold text-gray-600 uppercase tracking-tight">
             {brief.areaSize} {brief.areaUnit}
           </div>
-          <div className="px-2 py-1 rounded bg-slate-800 text-[10px] text-slate-300">
-            {brief.bedrooms} BHK
-          </div>
+          {brief.bedrooms > 0 && (
+            <div className="px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100 text-[10px] font-bold text-gray-600 uppercase tracking-tight">
+              {brief.bedrooms} Bedrooms
+            </div>
+          )}
         </div>
 
-        <p className="text-slate-400 text-sm line-clamp-2 mb-6">
+        <p className="text-gray-500 text-sm font-medium line-clamp-2 mb-6 leading-relaxed">
           {brief.description || "No additional description provided."}
         </p>
 
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-          <div className="text-sm font-medium text-indigo-400">
-            {brief.budgetNotSpecified ? "Budget Negotiable" : `PKR ${brief.budgetMin?.toLocaleString()} - ${brief.budgetMax?.toLocaleString()}`}
+        <div className="flex items-center justify-between mt-auto pt-5 border-t border-gray-50">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Budget Range</span>
+            <div className="text-sm font-bold text-primary">
+              {brief.budgetNotSpecified ? "Negotiable" : `PKR ${brief.budgetMin?.toLocaleString()} - ${brief.budgetMax?.toLocaleString()}`}
+            </div>
           </div>
           <Link 
             href={`/briefs/${brief._id}`}
-            className="btn-primary !px-4 !py-2 !text-[10px] !rounded-xl"
+            className="btn-primary !px-5 !py-2.5 !text-xs !font-bold rounded-xl shadow-md shadow-primary/10"
           >
-            VIEW DETAILS
+            Details
           </Link>
         </div>
       </div>
     </div>
   );
 }
+
