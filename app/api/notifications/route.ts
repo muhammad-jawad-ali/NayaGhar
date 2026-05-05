@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Verify user is fetching their own notifications
-    if (userId !== (session.user as any).id) {
+    if (userId !== session.user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest) {
     }
 
     // markAsRead now verifies userId internally
-    await markAsRead(id, (session.user as any).id);
+    await markAsRead(id, session.user.id);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Failed to mark notification as read:", error);

@@ -16,8 +16,8 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const briefId = searchParams.get("briefId");
     const agentId = searchParams.get("agentId");
-    const userRole = (session.user as any).role;
-    const userId = (session.user as any).id;
+    const userRole = session.user.role;
+    const userId = session.user.id;
 
     const query: any = {};
     
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if ((session.user as any).role !== "agent") {
+    if (session.user.role !== "agent") {
       return NextResponse.json({ error: "Only agents can submit bids" }, { status: 403 });
     }
 
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
       // 1.5 Check for duplicate bids
       const existingBid = await bidsCollection.findOne({
         briefId: validatedData.briefId,
-        agentId: (session.user as any).id
+        agentId: session.user.id
       });
 
       if (existingBid) {
@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
       // 2. Insert bid
       const newBid = {
         ...validatedData,
-        agentId: (session.user as any).id,
+        agentId: session.user.id,
         agentName: session?.user?.name || "Anonymous Agent",
         status: "pending",
         createdAt: new Date(),

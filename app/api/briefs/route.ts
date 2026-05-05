@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if ((session.user as any).role !== "buyer") {
+    if (session.user.role !== "buyer") {
       return NextResponse.json({ error: "Only buyers can post requirements" }, { status: 403 });
     }
 
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     
     const newBrief = {
       ...validatedData,
-      buyerId: (session.user as any).id,
+      buyerId: session.user.id,
       buyerName: session?.user?.name || "Anonymous",
       status: "open",
       bidsCount: 0,

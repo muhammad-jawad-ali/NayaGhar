@@ -65,7 +65,7 @@ export default function MarketplacePage() {
           </p>
         </div>
         
-        {(session?.user as any)?.role === "buyer" && (
+        {session?.user?.role === "buyer" && (
           <Link
             href="/briefs/new"
             className="btn-primary shadow-lg shadow-primary/20"

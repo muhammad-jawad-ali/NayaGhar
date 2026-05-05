@@ -22,8 +22,8 @@ export async function GET(
       return NextResponse.json({ error: "Bid not found" }, { status: 404 });
     }
 
-    const userId = (session.user as any).id;
-    const userRole = (session.user as any).role;
+    const userId = session.user.id;
+    const userRole = session.user.role;
 
     // Authorization: 
     // - Agent who created it
@@ -76,8 +76,8 @@ export async function PUT(
       return NextResponse.json({ error: "Bid not found" }, { status: 404 });
     }
 
-    const userId = (session.user as any).id;
-    const userRole = (session.user as any).role;
+    const userId = session.user.id;
+    const userRole = session.user.role;
 
     // Authorization for PUT (Update Status):
     // Only the Buyer who owns the brief or an Admin can update a bid status (accept/reject)
@@ -148,7 +148,7 @@ export async function DELETE(
     }
 
     // Ensure user owns the bid
-    if (bid.agentId !== (session.user as any).id && (session.user as any).role !== 'admin') {
+    if (bid.agentId !== session.user.id && session.user.role !== 'admin') {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

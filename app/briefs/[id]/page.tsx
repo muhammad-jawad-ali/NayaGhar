@@ -26,12 +26,12 @@ export default function BriefDetailPage() {
           setBrief(data);
           
           // If user is the owner or admin, fetch bids
-          if (session?.user && ((session.user as any).id === data.buyerId || (session.user as any).role === "admin")) {
+          if (session?.user && (session.user.id === data.buyerId || session.user.role === "admin")) {
             fetchBids();
           }
 
           // If user is an agent, check if they already bid
-          if (session?.user && (session.user as any).role === "agent") {
+          if (session?.user && session.user.role === "agent") {
             checkIfAlreadyBid();
           }
         } else {
@@ -61,7 +61,7 @@ export default function BriefDetailPage() {
 
     async function checkIfAlreadyBid() {
       try {
-        const res = await fetch(`/api/bids?briefId=${id}&agentId=${(session?.user as any).id}`);
+        const res = await fetch(`/api/bids?briefId=${id}&agentId=${session?.user?.id}`);
         if (res.ok) {
           const data = await res.json();
           if (data.bids && data.bids.length > 0) {
@@ -86,8 +86,8 @@ export default function BriefDetailPage() {
 
   if (!brief) return null;
 
-  const isOwner = session?.user && (session.user as any).id === brief.buyerId;
-  const isAdmin = session?.user && (session.user as any).role === "admin";
+  const isOwner = session?.user && session.user.id === brief.buyerId;
+  const isAdmin = session?.user && session.user.role === "admin";
   const canSeeBids = isOwner || isAdmin;
 
   return (
