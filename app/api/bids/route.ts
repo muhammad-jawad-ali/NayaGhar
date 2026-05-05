@@ -8,13 +8,49 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const briefId = searchParams.get("briefId");
     const agentId = searchParams.get("agentId");
+    const userRole = (session.user as any).role;
+    const userId = (session.user as any).id;
 
     const query: any = {};
-    if (briefId) query.briefId = briefId;
-    if (agentId) query.agentId = agentId;
+    
+    // Privacy Logic:
+    // 1. Admin can see anything.
+    // 2. Agents can only see bids they created.
+    // 3. Buyers can see bids for THEIR briefs.
+    
+    if (userRole === "agent") {
+      query.agentId = userId;
+      if (briefId) query.briefId = briefId;
+    } else if (userRole === "buyer") {
+      if (briefId) {
+        // Verify this brief belongs to the buyer
+        const briefsCollection = await getBriefsCollection();
+        const brief = await briefsCollection.findOne({ 
+          _id: new ObjectId(briefId) as any,
+          buyerId: userId 
+        });
+        
+        if (!brief) {
+          return NextResponse.json({ error: "Unauthorized access to these bids" }, { status: 403 });
+        }
+        query.briefId = briefId;
+      } else {
+        // If no briefId provided, they might want all bids for all their briefs
+        // This is complex, but for now let's require briefId or return empty
+        return NextResponse.json({ error: "briefId is required for buyers" }, { status: 400 });
+      }
+    } else if (userRole === "admin") {
+      if (briefId) query.briefId = briefId;
+      if (agentId) query.agentId = agentId;
+    }
 
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
@@ -54,7 +90,21 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const validatedData = BidSchema.parse(body);
+    
+    // Validate data with Zod
+    let validatedData;
+    try {
+      validatedData = BidSchema.parse(body);
+    } catch (zodError: any) {
+      console.error("Validation Error:", zodError);
+      const issues = zodError.issues || zodError.errors || [];
+      return NextResponse.json({ 
+        error: "Validation failed", 
+        details: issues.length > 0
+          ? issues.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ') 
+          : (zodError.message || String(zodError))
+      }, { status: 400 });
+    }
 
     const bidsCollection = await getBidsCollection();
     const briefsCollection = await getBriefsCollection();
@@ -71,6 +121,10 @@ export async function POST(req: NextRequest) {
       
       if (!brief) {
         throw new Error("BRIEF_NOT_FOUND");
+      }
+
+      if (brief.status === "closed") {
+        throw new Error("BRIEF_CLOSED");
       }
 
       // 1.5 Check for duplicate bids
@@ -104,7 +158,7 @@ export async function POST(req: NextRequest) {
       return { insertResult, brief };
     });
 
-    // 4. Create notification for buyer (outside retry as it's less critical and has its own logging)
+    // 4. Create notification for buyer
     try {
       await createNotification({
         userId: result.brief.buyerId,
@@ -124,9 +178,6 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("Failed to submit bid ERROR:", error);
-    if (error.name === "ZodError") {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
-    }
     
     if (error.message === "INVALID_BRIEF_ID") {
       return NextResponse.json({ error: "Invalid Brief ID format" }, { status: 400 });
@@ -136,6 +187,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "The requirement you are bidding on no longer exists." }, { status: 404 });
     }
 
+    if (error.message === "BRIEF_CLOSED") {
+      return NextResponse.json({ error: "This requirement is no longer accepting bids." }, { status: 400 });
+    }
+
     if (error.message === "DUPLICATE_BID") {
       return NextResponse.json({ error: "You have already submitted a bid for this requirement." }, { status: 409 });
     }
@@ -143,8 +198,9 @@ export async function POST(req: NextRequest) {
     const isConnectionError = error.message?.includes("topology") || error.name === "MongoNetworkError";
 
     return NextResponse.json({ 
-      error: isConnectionError ? "Database connection issue. Please try again in a few moments." : "Failed to submit bid", 
+      error: isConnectionError ? "Database connection issue. Please try again." : "Failed to submit bid", 
       details: error.message || String(error) 
     }, { status: 500 });
   }
 }
+

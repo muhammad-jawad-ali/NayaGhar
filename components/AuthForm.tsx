@@ -236,26 +236,35 @@ export default function AuthForm({ type }: AuthFormProps) {
         }
 
         .auth-button {
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+          background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
           color: white;
-          border: none;
-          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
           padding: 1rem;
           font-size: 1.1rem;
-          font-weight: 600;
+          font-weight: 700;
           cursor: pointer;
-          transition: all 0.3s;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           margin-top: 1rem;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+          position: relative;
+          overflow: hidden;
         }
 
         .auth-button:hover:not(:disabled) {
           transform: translateY(-2px);
-          box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+          box-shadow: 0 12px 24px -6px rgba(79, 70, 229, 0.5);
+          background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+        }
+
+        .auth-button:active:not(:disabled) {
+          transform: translateY(0) scale(0.98);
         }
 
         .auth-button:disabled {
-          opacity: 0.7;
+          opacity: 0.5;
           cursor: not-allowed;
+          filter: grayscale(0.5);
         }
 
         .auth-footer {

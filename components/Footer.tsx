@@ -1,130 +1,65 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-brand">
-          <div className="logo">
-            Naya<span>Ghar</span>
+    <footer className="bg-background border-t border-white/5 pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          <div className="col-span-1 lg:col-span-2">
+            <Link href="/" className="group inline-block mb-6">
+              <span className="text-2xl font-black tracking-tighter text-white">
+                Naya<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 group-hover:from-indigo-300 group-hover:to-purple-300 transition-all">Ghar</span>
+              </span>
+            </Link>
+            <p className="text-slate-400 max-w-sm leading-relaxed mb-8">
+              The demand-first real estate marketplace. Revolutionizing how you find your next home by letting verified agents pitch directly to you.
+            </p>
+            <div className="flex gap-4">
+              {["Twitter", "LinkedIn", "Instagram"].map((social) => (
+                <a 
+                  key={social}
+                  href="#" 
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all"
+                >
+                  <span className="sr-only">{social}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                </a>
+              ))}
+            </div>
           </div>
-          <p>The demand-first real estate marketplace. Revolutionizing how you find your next home.</p>
+          
+          <div>
+            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6">Platform</h4>
+            <ul className="space-y-4">
+              <li><Link href="/marketplace" className="text-slate-400 hover:text-white transition-colors text-sm">Marketplace</Link></li>
+              <li><Link href="/briefs/new" className="text-slate-400 hover:text-white transition-colors text-sm">Post a Brief</Link></li>
+              <li><Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">How it Works</Link></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6">Company</h4>
+            <ul className="space-y-4">
+              <li><Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">About Us</Link></li>
+              <li><Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
+              <li><Link href="#" className="text-slate-400 hover:text-white transition-colors text-sm">Terms of Service</Link></li>
+            </ul>
+          </div>
         </div>
         
-        <div className="footer-links">
-          <div className="link-group">
-            <h4>Platform</h4>
-            <a href="/marketplace">Marketplace</a>
-            <a href="/about">How it Works</a>
-          </div>
-          <div className="link-group">
-            <h4>Company</h4>
-            <a href="/contact">Contact Us</a>
-            <a href="/privacy">Privacy Policy</a>
-          </div>
-          <div className="link-group">
-            <h4>Social</h4>
-            <a href="https://twitter.com">Twitter</a>
-            <a href="https://linkedin.com">LinkedIn</a>
+        <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-slate-500 text-xs font-medium">
+            &copy; {new Date().getFullYear()} NayaGhar. All rights reserved.
+          </p>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">System Operational</span>
           </div>
         </div>
       </div>
-      
-      <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} NayaGhar. All rights reserved.</p>
-      </div>
-
-      <style jsx>{`
-        .footer {
-          background: rgba(2, 6, 23, 0.8);
-          backdrop-filter: blur(15px);
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          padding: 4rem 10% 2rem;
-          margin-top: auto;
-        }
-
-        .footer-content {
-          display: flex;
-          justify-content: space-between;
-          gap: 4rem;
-          margin-bottom: 3rem;
-          max-width: 1400px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .footer-brand {
-          max-width: 300px;
-        }
-
-        .logo {
-          font-size: 1.5rem;
-          font-weight: 800;
-          color: white;
-          margin-bottom: 1rem;
-        }
-
-        .logo span {
-          color: #3b82f6;
-        }
-
-        .footer-brand p {
-          color: #64748b;
-          line-height: 1.6;
-          font-size: 0.9rem;
-        }
-
-        .footer-links {
-          display: flex;
-          gap: 4rem;
-        }
-
-        .link-group h4 {
-          color: white;
-          font-size: 0.9rem;
-          font-weight: 700;
-          margin-bottom: 1.5rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .link-group a {
-          display: block;
-          color: #94a3b8;
-          text-decoration: none;
-          font-size: 0.9rem;
-          margin-bottom: 0.75rem;
-          transition: color 0.2s;
-        }
-
-        .link-group a:hover {
-          color: white;
-        }
-
-        .footer-bottom {
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          padding-top: 2rem;
-          text-align: center;
-          max-width: 1400px;
-          margin: 0 auto;
-        }
-
-        .footer-bottom p {
-          color: #475569;
-          font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-          .footer-content {
-            flex-direction: column;
-            gap: 2rem;
-          }
-          .footer-links {
-            flex-direction: column;
-            gap: 2rem;
-          }
-        }
-      `}</style>
     </footer>
   );
 }
+

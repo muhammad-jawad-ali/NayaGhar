@@ -65,10 +65,10 @@ export default function MarketplacePage() {
           </p>
         </div>
         
-        {session?.user?.role === "buyer" && (
+        {(session?.user as any)?.role === "buyer" && (
           <Link
             href="/briefs/new"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/20 transition-all duration-200"
+            className="btn-primary"
           >
             Post a Requirement
           </Link>
@@ -156,7 +156,7 @@ export default function MarketplacePage() {
       ) : briefs.length > 0 ? (
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300 ${loading ? 'opacity-50' : 'opacity-100'}`}>
           {briefs.map((brief) => (
-            <BriefCard key={brief._id} brief={brief} />
+            <BriefCard key={brief._id?.toString()} brief={brief} />
           ))}
         </div>
       ) : (
@@ -177,7 +177,7 @@ export default function MarketplacePage() {
           <button
             onClick={() => fetchBriefs(currentPage + 1, true)}
             disabled={loading}
-            className="px-10 py-4 bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] text-white font-bold rounded-2xl transition-all disabled:opacity-50"
+            className="btn-secondary px-10 py-4 disabled:opacity-50"
           >
             {loading ? "LOADING..." : "LOAD MORE REQUIREMENTS"}
           </button>
