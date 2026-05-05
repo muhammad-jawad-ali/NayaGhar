@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
+import NotificationBell from "./NotificationBell";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,46 +20,76 @@ export default function Navbar() {
 
   const user = session?.user as any;
 
+  const NavLinks = () => (
+    <>
+      <Link href="/marketplace" onClick={() => setMobileMenuOpen(false)}>Marketplace</Link>
+      
+      {status === "authenticated" ? (
+        <>
+          {user?.role === "admin" && (
+            <Link href="/dashboard/admin" onClick={() => setMobileMenuOpen(false)}>Admin Panel</Link>
+          )}
+          {user?.role === "buyer" && (
+            <>
+              <Link href="/dashboard/buyer" onClick={() => setMobileMenuOpen(false)}>My Briefs</Link>
+              <Link href="/briefs/new" className="highlight" onClick={() => setMobileMenuOpen(false)}>Post Brief</Link>
+            </>
+          )}
+          {user?.role === "agent" && (
+            <>
+              <Link href="/dashboard/agent" onClick={() => setMobileMenuOpen(false)}>My Bids</Link>
+              <Link href="/bids/active" onClick={() => setMobileMenuOpen(false)}>Active Leads</Link>
+            </>
+          )}
+          <div className="flex items-center gap-4">
+            <NotificationBell userId={user.id} />
+            <div className="user-menu">
+              <span className="user-name">{user.name}</span>
+              <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="logout-btn">
+                Logout
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="auth-btns">
+          <Link href="/auth/login" className="login-link" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+          <Link href="/auth/signup" className="signup-btn" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
+        </div>
+      )}
+    </>
+  );
+
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
+    <nav className={`navbar ${scrolled ? "scrolled" : ""} ${mobileMenuOpen ? "mobile-open" : ""}`}>
       <div className="nav-content">
         <Link href="/" className="logo">
           Naya<span>Ghar</span>
         </Link>
 
-        <div className="nav-links">
-          <Link href="/marketplace">Marketplace</Link>
-          
-          {status === "authenticated" ? (
-            <>
-              {user?.role === "admin" && (
-                <Link href="/admin">Admin Panel</Link>
-              )}
-              {user?.role === "buyer" && (
-                <>
-                  <Link href="/dashboard/buyer">My Briefs</Link>
-                  <Link href="/briefs/new" className="highlight">Post Brief</Link>
-                </>
-              )}
-              {user?.role === "agent" && (
-                <>
-                  <Link href="/dashboard/agent">My Bids</Link>
-                  <Link href="/bids/active">Active Leads</Link>
-                </>
-              )}
-              <div className="user-menu">
-                <span className="user-name">{user.name}</span>
-                <button onClick={() => signOut()} className="logout-btn">
-                  Logout
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="auth-btns">
-              <Link href="/auth/login" className="login-link">Sign In</Link>
-              <Link href="/auth/signup" className="signup-btn">Get Started</Link>
-            </div>
-          )}
+        {/* Desktop Links */}
+        <div className="nav-links desktop-only">
+          <NavLinks />
+        </div>
+
+        {/* Mobile Toggle */}
+        <button 
+          className="mobile-toggle" 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          <div className={`hamburger ${mobileMenuOpen ? "active" : ""}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`mobile-menu ${mobileMenuOpen ? "active" : ""}`}>
+        <div className="mobile-links">
+          <NavLinks />
         </div>
       </div>
 
@@ -98,6 +130,7 @@ export default function Navbar() {
           color: white;
           text-decoration: none;
           letter-spacing: -1px;
+          z-index: 1001;
         }
 
         .logo span {
@@ -123,7 +156,7 @@ export default function Navbar() {
         }
 
         .highlight {
-          color: #3b82f6 !ast;
+          color: #3b82f6 !important;
         }
 
         .auth-btns {
@@ -176,7 +209,107 @@ export default function Navbar() {
         .logout-btn:hover {
           background: rgba(239, 68, 68, 0.2);
         }
+
+        .mobile-toggle {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          z-index: 1001;
+        }
+
+        .hamburger {
+          width: 30px;
+          height: 20px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .hamburger span {
+          display: block;
+          height: 2px;
+          width: 100%;
+          background: white;
+          border-radius: 10px;
+          transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger.active span:nth-child(1) {
+          transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+          transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: #020617;
+          z-index: 1000;
+          padding: 100px 5% 40px;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .mobile-links {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          align-items: center;
+          text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+          .desktop-only {
+            display: none;
+          }
+          .mobile-toggle {
+            display: block;
+          }
+          .mobile-menu {
+            display: block;
+          }
+          .mobile-links a {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 700;
+          }
+          .mobile-links .auth-btns {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 2rem;
+          }
+          .mobile-links .signup-btn {
+            width: 100%;
+            text-align: center;
+          }
+          .mobile-links .user-menu {
+            flex-direction: column;
+            border: none;
+            padding: 0;
+            margin-top: 1rem;
+          }
+        }
       `}</style>
     </nav>
   );
 }
+
