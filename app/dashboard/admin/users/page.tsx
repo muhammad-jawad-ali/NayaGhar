@@ -89,7 +89,7 @@ export default function AdminUsersPage() {
                 </tr>
               ))
             ) : users.map(user => (
-              <tr key={user._id} className="hover:bg-white/[0.01] transition-all group">
+              <tr key={user._id?.toString()} className="hover:bg-white/[0.01] transition-all group">
                 <td className="px-8 py-6 font-bold text-white group-hover:text-indigo-400 transition-colors">
                   {user.name}
                 </td>

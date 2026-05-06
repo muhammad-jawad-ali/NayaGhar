@@ -51,7 +51,7 @@ export default function BuyerDashboard({ initialBriefs, initialNotifications }: 
           ) : briefs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {briefs.map(brief => (
-                <BriefCard key={brief._id} brief={brief} onDelete={handleDeleteBrief} />
+                <BriefCard key={brief._id?.toString()} brief={brief} onDelete={handleDeleteBrief} />
               ))}
             </div>
           ) : (

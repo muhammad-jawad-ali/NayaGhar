@@ -59,7 +59,7 @@ export default function AgentDashboard({ initialBids, initialBriefs, initialNoti
             ) : bids.length > 0 ? (
               <div className="space-y-4">
                 {bids.map(bid => (
-                  <div key={bid._id} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all group">
+                  <div key={bid._id?.toString()} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-all group">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">
                         {bid.propertyTitle}
@@ -102,7 +102,7 @@ export default function AgentDashboard({ initialBids, initialBriefs, initialNoti
             <h2 className="text-xl font-bold text-white mb-6">Hot New Leads</h2>
             <div className="space-y-4">
               {briefs.map(brief => (
-                <div key={brief._id} className="p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                <div key={brief._id?.toString()} className="p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
                   <p className="text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-1">{brief.category}</p>
                   <h4 className="text-white font-bold mb-1">{brief.areaSize} {brief.areaUnit} in {brief.area}</h4>
                   <p className="text-slate-500 text-xs mb-4">Budget: PKR {brief.budgetMax?.toLocaleString()}</p>

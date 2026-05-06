@@ -194,7 +194,7 @@ export default function BriefDetailPage() {
               ) : bids.length > 0 ? (
                 <div className="space-y-4">
                   {bids.map((bid) => (
-                    <div key={bid._id} className="p-6 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-indigo-500/30 transition-all group">
+                    <div key={bid._id?.toString()} className="p-6 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-indigo-500/30 transition-all group">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                         <div>
                           <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">{bid.propertyTitle}</h3>

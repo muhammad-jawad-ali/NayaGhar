@@ -3,7 +3,7 @@
 import { getUsersCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);

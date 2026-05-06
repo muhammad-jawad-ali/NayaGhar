@@ -81,7 +81,7 @@ export default function AdminDashboardClient() {
           <h2 className="text-2xl font-bold text-white mb-6">Latest Registered Users</h2>
           <div className="space-y-4 mb-8">
             {data?.latestUsers?.map((user: any) => (
-              <div key={user._id} className="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+              <div key={user._id?.toString()} className="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
                 <div>
                   <p className="text-white font-bold">{user.name}</p>
                   <p className="text-slate-500 text-xs">{user.email}</p>
