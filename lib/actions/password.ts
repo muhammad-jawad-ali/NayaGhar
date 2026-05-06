@@ -15,20 +15,31 @@ export async function requestPasswordReset(formData: FormData) {
   }
 
   const token = crypto.randomBytes(32).toString("hex");
+  // Hash the token before storing it for better security
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
   const expires = new Date(Date.now() + 3600000); // 1 hour from now
 
   await users.updateOne(
     { email },
     { 
       $set: { 
-        resetToken: token, 
+        resetToken: hashedToken, 
         resetTokenExpires: expires 
       } 
     }
   );
 
-  // In a real app, send email here. For now, we'll just log it or return it for testing.
-  console.log(`Password reset link: http://localhost:3000/auth/reset-password?token=${token}`);
+  // In a real app, send email here. 
+  // The link contains the RAW token, while the DB contains the HASHED token.
+  const resetUrl = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/auth/reset-password?token=${token}`;
+  
+  console.log(`Password reset link: ${resetUrl}`);
+  
+  // TODO: Implement actual email sending with Resend, SendGrid, etc.
   
   return { success: true, message: "If an account exists with this email, you will receive a reset link." };
 }
@@ -36,10 +47,21 @@ export async function requestPasswordReset(formData: FormData) {
 export async function resetPassword(formData: FormData) {
   const token = formData.get("token") as string;
   const password = formData.get("password") as string;
+  
+  if (!token || !password) {
+    return { error: "Missing token or password" };
+  }
+
   const users = await getUsersCollection();
 
+  // Hash the incoming token to compare with the one in the database
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
   const user = await users.findOne({
-    resetToken: token,
+    resetToken: hashedToken,
     resetTokenExpires: { $gt: new Date() }
   });
 
@@ -52,7 +74,10 @@ export async function resetPassword(formData: FormData) {
   await users.updateOne(
     { _id: user._id },
     { 
-      $set: { password: hashedPassword },
+      $set: { 
+        password: hashedPassword,
+        updatedAt: new Date()
+      },
       $unset: { resetToken: "", resetTokenExpires: "" }
     }
   );

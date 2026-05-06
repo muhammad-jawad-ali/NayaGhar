@@ -8,6 +8,9 @@ export interface User {
   email: string;
   password?: string;
   role: UserRole;
+  isActive?: boolean;
+  resetToken?: string;
+  resetTokenExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

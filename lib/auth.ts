@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+    maxAge: 2 * 60 * 60, // 2 hours of inactivity will log out user
   },
   providers: [
     CredentialsProvider({
@@ -24,6 +25,10 @@ export const authOptions: NextAuthOptions = {
 
         if (!user || !user.password) {
           throw new Error("No user found with this email");
+        }
+
+        if (user.isActive === false) {
+          throw new Error("This account has been deactivated. Please contact support.");
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);
