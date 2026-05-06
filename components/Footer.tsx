@@ -1,9 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Globe, Send, Camera, Briefcase, Mail } from "lucide-react";
 
 export default function Footer() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <footer className="bg-white border-t border-gray-100 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-6">
@@ -57,7 +61,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-100 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-gray-500 text-xs font-semibold">
-            &copy; {new Date().getFullYear()} NayaGhar. All rights reserved.
+            &copy; {mounted ? new Date().getFullYear() : '2024'} NayaGhar. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />

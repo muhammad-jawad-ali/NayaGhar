@@ -1,12 +1,19 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { Brief, BriefStatus } from "@/lib/types";
 
 interface BriefCardProps {
   brief: Brief;
   onDelete?: (id: string) => void;
+  onStatusChange?: (id: string, newStatus: BriefStatus) => void;
 }
 
-export default function BriefCard({ brief, onDelete }: BriefCardProps) {
+export default function BriefCard({ brief, onDelete, onStatusChange }: BriefCardProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const statusColors: Record<BriefStatus, string> = {
     open: "bg-green-50 text-green-700 border-green-100",
     closed: "bg-gray-50 text-gray-600 border-gray-100",
@@ -17,13 +24,33 @@ export default function BriefCard({ brief, onDelete }: BriefCardProps) {
     <div className="group relative p-6 rounded-2xl bg-white border border-gray-100 hover:border-primary/50 hover:shadow-xl hover:shadow-gray-200/40 transition-all duration-300 overflow-hidden">
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex justify-between items-start mb-5">
-          <span className={`px-3 py-1 rounded-full text-[10px] font-bold border tracking-wider ${statusColors[brief.status]}`}>
-            {brief.status.toUpperCase()}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className={`px-3 py-1 rounded-full text-[10px] font-bold border tracking-wider ${statusColors[brief.status]}`}>
+              {brief.status.toUpperCase()}
+            </span>
+            {brief.buyerName && (
+              <span className="text-[11px] font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                By {brief.buyerName}
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-3">
             <span className="text-gray-400 text-[11px] font-bold">
-              {new Date(brief.createdAt).toLocaleDateString("en-PK", { day: 'numeric', month: 'short', year: 'numeric' })}
+              {mounted ? new Date(brief.createdAt).toLocaleDateString("en-PK", { day: 'numeric', month: 'short', year: 'numeric' }) : '...'}
             </span>
+            {onStatusChange && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onStatusChange(brief._id!.toString(), brief.status === "open" ? "closed" : "open");
+                }}
+                className={`text-xs font-bold px-2 py-1 rounded border transition-colors ${
+                  brief.status === "open" ? "text-rose-500 border-rose-100 bg-rose-50 hover:bg-rose-100" : "text-emerald-500 border-emerald-100 bg-emerald-50 hover:bg-emerald-100"
+                }`}
+              >
+                {brief.status === "open" ? "Close" : "Reopen"}
+              </button>
+            )}
             {onDelete && (
               <button 
                 onClick={(e) => {

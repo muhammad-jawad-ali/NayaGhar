@@ -56,6 +56,15 @@ export async function POST(req: NextRequest) {
 
     const collection = await getBriefsCollection();
     
+    // Check active briefs count
+    const activeBriefsCount = await collection.countDocuments({
+      buyerId: session.user.id,
+      status: "open"
+    });
+
+    if (activeBriefsCount >= 3) {
+      return NextResponse.json({ error: "You can only have up to 3 active requirements at a time. Please close or delete an existing requirement to post a new one." }, { status: 403 });
+    }
     const newBrief = {
       ...validatedData,
       buyerId: session.user.id,
