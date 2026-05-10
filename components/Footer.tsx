@@ -57,7 +57,7 @@ export default function Footer() {
                 {[
                   ["Marketplace", "/marketplace"],
                   ["Post a Brief", "/briefs/new"],
-                  ["How it Works", "#"],
+                  ["How it Works", "/how-it-works"],
                 ].map(([label, href]) => (
                   <li key={label}>
                     <Link href={href} className="group flex items-center justify-between rounded-2xl px-3 py-2 text-sm font-bold text-gray-600 transition-all hover:bg-white/80 hover:text-primary">
@@ -76,9 +76,9 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {[
-                  ["About Us", "#"],
-                  ["Privacy Policy", "#"],
-                  ["Terms of Service", "#"],
+                  ["About Us", "/about"],
+                  ["Privacy Policy", "/privacy-policy"],
+                  ["Terms of Service", "/terms-of-service"],
                 ].map(([label, href]) => (
                   <li key={label}>
                     <Link href={href} className="group flex items-center justify-between rounded-2xl px-3 py-2 text-sm font-bold text-gray-600 transition-all hover:bg-white/80 hover:text-primary">
