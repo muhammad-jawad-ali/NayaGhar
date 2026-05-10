@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   
   try {
     await client.connect();
-    const db = client.db(); // Uses the DB name from the URI
+    const db = client.db("nayaghar"); // Explicitly use the 'nayaghar' database name
     
     const users = db.collection("users");
     const briefs = db.collection("briefs");
