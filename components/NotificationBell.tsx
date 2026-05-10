@@ -10,9 +10,11 @@ export default function NotificationBell({ userId }: { userId: string }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     let interval: NodeJS.Timeout;
 
     async function fetchNotifications() {

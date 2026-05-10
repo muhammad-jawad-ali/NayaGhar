@@ -78,9 +78,13 @@ This project was specifically engineered to satisfy **100% of the Web Programmin
 2. **Environment Variables**
    Create a `.env.local` file in the root directory:
    ```env
+   # Database
    MONGODB_URI=your_mongodb_connection_string
    NEXTAUTH_SECRET=your_secure_random_string
    NEXTAUTH_URL=http://localhost:3000
+   
+   # Node Environment
+   NODE_ENV=development
    ```
 
 3. **Start Development Server**

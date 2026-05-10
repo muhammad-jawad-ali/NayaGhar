@@ -3,7 +3,7 @@
 import { getUsersCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
@@ -32,6 +32,15 @@ export async function updateUserRole(userId: string, role: string) {
   await users.updateOne(
     { _id: new ObjectId(userId) },
     { $set: { role, updatedAt: new Date() } }
+  );
+  return { success: true };
+}
+export async function toggleUserStatus(userId: string, isActive: boolean) {
+  await ensureAdmin();
+  const users = await getUsersCollection();
+  await users.updateOne(
+    { _id: new ObjectId(userId) },
+    { $set: { isActive, updatedAt: new Date() } }
   );
   return { success: true };
 }

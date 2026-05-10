@@ -1,8 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { useState, useEffect } from "react";
 import { 
   LogOut, 
   Menu, 
@@ -19,10 +19,12 @@ import NotificationBell from "./NotificationBell";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -99,12 +101,12 @@ export default function Navbar() {
             <NotificationBell userId={user.id} />
             <div className="flex items-center gap-3 bg-gray-50 p-1 pr-3 rounded-full border border-gray-200">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs">
-                {user.name?.charAt(0).toUpperCase()}
+                {user?.name?.charAt(0).toUpperCase()}
               </div>
               {!mobile && (
                 <div className="flex flex-col leading-none">
-                  <span className="text-gray-900 font-bold text-[11px]">{user.name}</span>
-                  <span className="text-gray-500 font-bold text-[9px] uppercase tracking-wider">{user.role}</span>
+                  <span className="text-gray-900 font-bold text-[11px]">{user?.name}</span>
+                  <span className="text-gray-500 font-bold text-[9px] uppercase tracking-wider">{user?.role}</span>
                 </div>
               )}
               <button 
@@ -185,6 +187,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-
-

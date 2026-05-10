@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Plus, ArrowRight, ShieldCheck, Zap, MessageSquare, Headphones, FileText, Activity, TrendingUp, BarChart3 } from "lucide-react";
@@ -10,6 +10,8 @@ import BriefCard from "@/components/BriefCard";
 
 export default function BuyerDashboard({ initialBriefs, initialNotifications }: { initialBriefs: Brief[], initialNotifications: Notification[] }) {
   const { data: session } = useSession();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [briefs, setBriefs] = useState<Brief[]>(initialBriefs);
   const [notifications] = useState<Notification[]>(initialNotifications);
   const [loading, setLoading] = useState(false);

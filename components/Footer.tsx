@@ -1,10 +1,14 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Briefcase, Camera, Globe, Mail, Send, ShieldCheck, Sparkles } from "lucide-react";
 
 export default function Footer() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <footer className="relative overflow-hidden bg-[#f7f5ef] px-4 py-10 sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(22,163,74,0.14),transparent_28%),radial-gradient(circle_at_84%_36%,rgba(15,23,42,0.09),transparent_30%)]" />

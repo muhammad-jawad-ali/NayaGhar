@@ -4,7 +4,7 @@ import { BidSchema } from "@/lib/validations";
 import { ObjectId } from "mongodb";
 import { createNotification } from "@/lib/notifications";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 type SessionUser = {
   id?: string;
@@ -145,6 +145,16 @@ export async function POST(req: NextRequest) {
         throw new Error("DUPLICATE_BID");
       }
 
+      // 1.6 Check max active bids
+      const activeBidsCount = await bidsCollection.countDocuments({
+        agentId: session.user.id,
+        status: "pending"
+      });
+
+      if (activeBidsCount >= 3) {
+        throw new Error("MAX_BIDS_REACHED");
+      }
+
       // 2. Insert bid
       const newBid = {
         ...validatedData,
@@ -201,6 +211,10 @@ export async function POST(req: NextRequest) {
 
     if (error.message === "DUPLICATE_BID") {
       return NextResponse.json({ error: "You have already submitted a bid for this requirement." }, { status: 409 });
+    }
+
+    if (error.message === "MAX_BIDS_REACHED") {
+      return NextResponse.json({ error: "You have reached the maximum limit of 3 active bids. Please withdraw an existing bid to submit a new one." }, { status: 403 });
     }
 
     const isConnectionError = error.message?.includes("topology") || error.name === "MongoNetworkError";

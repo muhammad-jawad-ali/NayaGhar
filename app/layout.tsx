@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/components/Providers";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -27,10 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { Providers } from "@/components/Providers";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,7 +40,7 @@ export default function RootLayout({
       lang="en"
       className={`${instrumentSans.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#020617] text-slate-200">
+      <body className="min-h-full flex flex-col bg-white text-gray-900">
         <Providers>
           <Navbar />
           <div className="pt-20 flex-grow">

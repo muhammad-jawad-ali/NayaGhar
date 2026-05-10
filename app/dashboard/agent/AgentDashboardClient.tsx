@@ -33,6 +33,8 @@ export default function AgentDashboard({
   initialNotifications: Notification[];
 }) {
   const { data: session } = useSession();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [bids, setBids] = useState<Bid[]>(initialBids);
   const [briefs, setBriefs] = useState<Brief[]>(initialBriefs);
   const [notifications] = useState<Notification[]>(initialNotifications);

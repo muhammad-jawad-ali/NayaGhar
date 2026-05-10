@@ -3,7 +3,7 @@ import { getBriefsCollection } from "@/lib/db";
 import { BriefSchema } from "@/lib/validations";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 type RouteContext = {
   params: Promise<{ id: string }>;
@@ -52,7 +52,7 @@ export async function PUT(
       return NextResponse.json({ error: "Brief not found" }, { status: 404 });
     }
     
-    if (brief.buyerId !== (session.user as any).id && (session.user as any).role !== 'admin') {
+    if (brief.buyerId !== session.user.id && session.user.role !== 'admin') {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -95,7 +95,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Brief not found" }, { status: 404 });
     }
     
-    if (brief.buyerId !== (session.user as any).id && (session.user as any).role !== 'admin') {
+    if (brief.buyerId !== session.user.id && session.user.role !== 'admin') {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
