@@ -211,39 +211,10 @@ export default function AdminUsersPage() {
                   </td>
                 </tr>
               ))
-            ) : users.map(user => (
-              <tr key={user._id} className="hover:bg-white/[0.01] transition-all group">
-                <td className="px-8 py-6 font-bold text-white group-hover:text-indigo-400 transition-colors">
-                  {user.name}
-                </td>
-                <td className="px-8 py-6 text-slate-400 text-sm">
-                  {user.email}
-                </td>
-                <td className="px-8 py-6">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                    user.role === 'admin' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
-                    user.role === 'agent' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' :
-                    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                  }`}>
-                    {user.role}
-                  </span>
-                </td>
-                <td className="px-8 py-6 text-slate-500 text-xs font-medium">
-                  {new Date(user.createdAt).toLocaleDateString("en-GB", { year: 'numeric', month: 'short', day: 'numeric' })}
-                </td>
-                <td className="px-8 py-6 text-right">
-                  <button 
-                    onClick={() => handleRoleChange(user._id, user.role)}
-                    disabled={updating === user._id}
-                    className="px-4 py-2 bg-white/5 hover:bg-white/10 text-[10px] text-white font-black uppercase tracking-widest rounded-lg border border-white/5 transition-all disabled:opacity-50"
-                  >
-                    {updating === user._id ? "Updating..." : "Cycle Role"}
-                  </button>
-                </td>
-              </tr>
-            ))}
+            }
           </tbody>
         </table>
+        </div>
         {!loading && users.length === 0 && (
           <div className="p-24 text-center">
             <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-300">

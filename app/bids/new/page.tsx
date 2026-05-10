@@ -174,7 +174,7 @@ function BidForm() {
                         </div>
                         <div>
                           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Budget Range</p>
-                          <p className="font-bold text-gray-900">PKR {brief.minBudget?.toLocaleString()} - {brief.maxBudget?.toLocaleString()}</p>
+                          <p className="font-bold text-gray-900">PKR {brief.budgetMin?.toLocaleString()} - {brief.budgetMax?.toLocaleString()}</p>
                         </div>
                       </div>
                     </div>
