@@ -150,7 +150,7 @@ export default function NotificationBell({ userId }: { userId: string }) {
                     <span className="text-[10px] text-primary font-bold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                       VIEW ACTION <span className="text-[14px]">→</span>
                     </span>
-                    <span className="text-[10px] text-gray-400 font-bold">{new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    <span className="text-[10px] text-gray-400 font-bold">{new Date(n.createdAt).toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                 </div>
               ))
@@ -165,4 +165,3 @@ export default function NotificationBell({ userId }: { userId: string }) {
     </div>
   );
 }
-

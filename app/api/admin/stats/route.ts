@@ -12,12 +12,23 @@ export async function GET(req: NextRequest) {
 
     const db = await getDb();
     
-    const [userCount, briefCount, bidCount, latestUsers] = await Promise.all([
+    const [userCount, briefCount, bidCount, latestUsers, latestBids, areaInsightsRaw] = await Promise.all([
       db.collection("users").countDocuments(),
       db.collection("briefs").countDocuments(),
       db.collection("bids").countDocuments(),
-      db.collection("users").find().sort({ createdAt: -1 }).limit(5).toArray()
+      db.collection("users").find().sort({ createdAt: -1 }).limit(5).toArray(),
+      db.collection("bids").find().sort({ createdAt: -1 }).limit(5).toArray(),
+      db.collection("briefs").aggregate([
+        { $group: { _id: "$area", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 5 }
+      ]).toArray()
     ]);
+
+    const areaInsights = areaInsightsRaw.map((item: any) => ({
+      name: item._id || "Unknown",
+      value: item.count
+    }));
 
     return NextResponse.json({
       stats: {
@@ -25,7 +36,9 @@ export async function GET(req: NextRequest) {
         briefs: briefCount,
         bids: bidCount
       },
-      latestUsers
+      latestUsers,
+      latestBids,
+      areaInsights
     });
   } catch (error) {
     console.error("Admin stats error:", error);

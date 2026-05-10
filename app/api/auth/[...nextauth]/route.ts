@@ -6,6 +6,8 @@ import bcrypt from "bcryptjs";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 2, // 2 hours
+    updateAge: 60 * 60, // 1 hour (update session after 1 hour of activity)
   },
   providers: [
     CredentialsProvider({
@@ -24,6 +26,10 @@ export const authOptions: NextAuthOptions = {
 
         if (!user || !user.password) {
           throw new Error("No user found with this email");
+        }
+
+        if (user.isBlocked) {
+          throw new Error("You have been blocked by admin, contact admin.");
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);

@@ -106,7 +106,7 @@ export default function AdminUsersPage() {
                   </span>
                 </td>
                 <td className="px-8 py-6 text-slate-500 text-xs font-medium">
-                  {new Date(user.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                  {new Date(user.createdAt).toLocaleDateString("en-GB", { year: 'numeric', month: 'short', day: 'numeric' })}
                 </td>
                 <td className="px-8 py-6 text-right">
                   <button 
@@ -130,4 +130,3 @@ export default function AdminUsersPage() {
     </div>
   );
 }
-

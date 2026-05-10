@@ -55,7 +55,7 @@ export default function AuthForm({ type }: AuthFormProps) {
       });
 
       if (res?.error) {
-        setError("Invalid email or password");
+        setError(res.error);
         setLoading(false);
       } else {
         router.push("/");
@@ -66,7 +66,7 @@ export default function AuthForm({ type }: AuthFormProps) {
 
   return (
     <div className="flex justify-center items-center min-h-[80vh] p-4 sm:p-8">
-      <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 w-full max-w-[480px] shadow-2xl shadow-gray-200/50 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-3xl p-8 sm:p-12 w-full max-w-[480px] shadow-[0_8px_40px_rgba(0,0,0,0.08)] animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="text-center mb-10">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
             {type === "login" ? "Welcome Back" : "Join NayaGhar"}
